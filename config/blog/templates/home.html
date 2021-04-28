@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+{% if user.is_authenticated %}
+
+<h1>Posts</h1>
+
+<ul>
+{% for post in object_list %}
+
+    <li><a href="{% url 'blogdetails' post.pk %}">{{ post.title }}</a> - 
+        {{ post.author.first_name }} {{ post.author.last_name }} - {{ post.post_date }} 
+
+        {% if user.is_authenticated %}
+            -<a href="{% url 'update_post' post.pk %}">Edit</a>
+            <a href="{% url 'delete_post' post.pk %}">Delete</a><br>
+            {{ post.body }}</li>
+        {% endif %}
+{% endfor %}
+
+</ul>
+{% else %}
+Login to access your account or Register if you don't have an account
+{% endif %}
+
+{% endblock %}
